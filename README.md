@@ -1,10 +1,10 @@
-Chat App
+## Simple Chat App
 A simple chat application built with:
 
 - Frontend: React + Tailwind CSS
 - Backend: Node.js + Express + Socket.io
 
-Installation
+## Installation
 ```bash
 # Clone the repository
 git clone https://github.com/aleksifuna/chat-app.git
@@ -16,6 +16,6 @@ npm start # Run the backend server
 cd ../client && npm install  # For frontend
 npm run dev # Run the frontend
 ```
-Usage
+## Usage
 Open http://localhost:5173
 
