@@ -1,9 +1,16 @@
-import { React, useState, useEffect } from "react";
+import { React, useState, useEffect, useRef } from "react";
 import Message from "./Message";
 
 export default function Chatbox({ socket }) {
   const [msgs, setMsgs] = useState([]);
+  const messagesEndRef = useRef(null);
   const user = localStorage.getItem("username");
+
+  // Function to scroll to bottom
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
   useEffect(() => {
     socket.on("Message", (msg) => {
       user === msg.user
@@ -15,6 +22,11 @@ export default function Chatbox({ socket }) {
       });
     });
   }, [socket, user]);
+
+  // Effect to scroll to bottom when messages change
+  useEffect(() => {
+    scrollToBottom();
+  }, [msgs]);
 
   if (msgs.length === 0) {
     return null;
@@ -28,6 +40,7 @@ export default function Chatbox({ socket }) {
           {msgs.map((message) => (
             <Message key={message.id} message={message} />
           ))}
+          <div ref={messagesEndRef} />
         </div>
       </div>
     </div>
