@@ -3,6 +3,7 @@ import cors from 'cors';
 import {createServer } from 'http';
 import { Server } from 'socket.io';
 import { responseObj } from './utils/messages.js';
+import chatBot from './utils/llm.js';
 
 const app = express();
 app.use(cors());
@@ -19,6 +20,9 @@ socketIO.on('connection', (socket) => {
 
     socket.on('Message', ({user, message}) => {
         socketIO.emit('Message', responseObj(user, message));
+        chatBot(message).then((response) => {
+            socketIO.emit('Message', responseObj('Bot', response));
+        });
     });
 
     socket.on('disconnect', () => {
