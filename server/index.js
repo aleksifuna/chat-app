@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import {createServer } from 'http';
 import { Server } from 'socket.io';
+import { responseObj } from './utils/messages.js';
 
 const app = express();
 app.use(cors());
@@ -14,7 +15,11 @@ const socketIO = new Server(http, {
 });
 
 socketIO.on('connection', (socket) => {
-    console.log(`${socket.id} user just connected!`);
+    socketIO.emit('Message', responseObj('Admin', 'Welcome to the chat app!'));
+
+    socket.on('Message', ({user, message}) => {
+        socketIO.emit('Message', responseObj(user, message));
+    });
 
     socket.on('disconnect', () => {
         console.log('user disconnected');

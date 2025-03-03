@@ -18,7 +18,7 @@ export default function Message({ message }) {
         {!message.isCurrentUser && (
           <div className="font-bold text-sm">{message.user}</div>
         )}
-        <p>{message.text}</p>
+        <p>{message.message}</p>
         <div
           className={`text-xs mt-1 ${
             message.isCurrentUser ? "text-blue-100" : "text-gray-500"
